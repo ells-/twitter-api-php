@@ -8,6 +8,7 @@ $settings = array(
     'oauth_access_token_secret' => "",
     'consumer_key' => "",
     'consumer_secret' => ""
+    'curl_proxy' => ""
 );
 
 /** URL for REST request, see: https://dev.twitter.com/docs/api/1.1/ **/

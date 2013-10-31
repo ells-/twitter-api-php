@@ -17,6 +17,7 @@ class TwitterAPIExchange
     private $oauth_access_token_secret;
     private $consumer_key;
     private $consumer_secret;
+    private $curl_proxy;
     private $postfields;
     private $getfield;
     protected $oauth;
@@ -49,6 +50,12 @@ class TwitterAPIExchange
         $this->oauth_access_token_secret = $settings['oauth_access_token_secret'];
         $this->consumer_key = $settings['consumer_key'];
         $this->consumer_secret = $settings['consumer_secret'];
+
+        if (isset($settings['curl_proxy']))
+        {
+            $this->curl_proxy = $settings['curl_proxy'];
+        }
+
     }
     
     /**
@@ -188,6 +195,7 @@ class TwitterAPIExchange
         
         $getfield = $this->getGetfield();
         $postfields = $this->getPostfields();
+        $curlproxy = $this->curl_proxy;
 
         $options = array( 
             CURLOPT_HTTPHEADER => $header,
@@ -196,6 +204,11 @@ class TwitterAPIExchange
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => 10,
         );
+
+        if (!is_null($curlproxy))
+        {
+            $options[CURLOPT_PROXY] = $curlproxy;
+        }
 
         if (!is_null($postfields))
         {
